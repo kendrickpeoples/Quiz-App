@@ -10,32 +10,19 @@ let score = 0;
 let questionCounter = 0;
 let availableQuestions = [];
 
-let questions = [
-    {
-        question: "Question 1 is Question 1",
-        choice1: "choice1",
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 1
-    },
-    {
-        question: "Question 2 is Question 2",
-        choice1: "choice1",
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 3
-    },
-    {
-        question: "Question 3 is Question 3",
-        choice1: "choice1",
-        choice2: "choice2",
-        choice3: "choice3",
-        choice4: "choice4",
-        answer: 1
-    },
-];
+let questions = [];
+
+fetch("questions.json")
+    .then( res => {
+        return res.json();
+    })
+    .then(loadedQuestions => {
+        questions = loadedQuestions;
+        startQuiz();
+    })
+    .catch( err => {
+        console.error(err);
+    });
 
 //CONSTANTS
 const CORRECT_BONUS = 10;
@@ -99,5 +86,3 @@ incrementScore = num => {
     score += num;
     scoreText.innerText = score;
 }
-
-startQuiz();
