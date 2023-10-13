@@ -46,7 +46,6 @@ startQuiz = () => {
 };
 
 getNewQuestion = () => {
-
     if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS){
         //go to end page
         return window.location.assign("/end.html");
@@ -62,7 +61,6 @@ getNewQuestion = () => {
     });
 
     availableQuestions.splice(questionIndex, 1);
-    console.log(availableQuestions);
     acceptingAnswers = true;
 };
 
@@ -73,8 +71,16 @@ choices.forEach(choice => {
         acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset["number"];
-        console.log(selectedAnswer);
-        getNewQuestion();
+
+        const classToApply = 
+            selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
+
+        selectedChoice.parentElement.classList.add(classToApply);
+        setTimeout( () => {
+            selectedChoice.parentElement.classList.remove(classToApply);
+            getNewQuestion();
+        }, 1000);
+
     });
 });
 
